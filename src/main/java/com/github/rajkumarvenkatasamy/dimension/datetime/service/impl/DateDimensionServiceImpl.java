@@ -52,13 +52,30 @@ public class DateDimensionServiceImpl implements DateDimensionService {
     @Transactional
     public boolean populateDateDimension() {
 
+        LocalTime localTime1 = LocalTime.now();
+        List<DimDate> dimDateList = new ArrayList<>();
+
+        try{
+            dimDateList = processDateDimension();
+            dateDimensionRepository.saveAll(dimDateList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        LocalTime localTime2 = LocalTime.now();
+        LOGGER.info("Elapsed Time (seconds) : " + MINUTES.between(localTime1, localTime2));
+
+        return true;
+    }
+
+    public List<DimDate> processDateDimension(){
         FiscalDate fiscalDateObj = new FiscalDate();
         FiscalWeek fiscalWeekObj = new FiscalWeek();
         FiscalMonth fiscalMonthObj = new FiscalMonth();
         FiscalQuarter fiscalQuarterObj = new FiscalQuarter();
         FiscalHalfYear fiscalHalfYearObj = new FiscalHalfYear();
         FiscalYear fiscalYearObj = new FiscalYear();
-        LocalTime localTime1 = LocalTime.now();
+
 
         LocalDate startDate = LocalDate.parse(inputStartDate);
         LocalDate endDate = LocalDate.parse(inputEndDate);
@@ -182,11 +199,7 @@ public class DateDimensionServiceImpl implements DateDimensionService {
             LOGGER.debug("dimDate object values : " + dimDate.toString());
             dimDateList.add(dimDate);
         }
-        dateDimensionRepository.saveAll(dimDateList);
-        LocalTime localTime2 = LocalTime.now();
-        LOGGER.info("Elapsed Time (seconds) : " + MINUTES.between(localTime1, localTime2));
-
-        return true;
+        return dimDateList;
     }
 
     private Map<DayOfWeek, Integer> createDayAndValueMap() {
