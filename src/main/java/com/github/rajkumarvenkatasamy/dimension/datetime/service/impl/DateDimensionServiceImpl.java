@@ -1,5 +1,6 @@
 package com.github.rajkumarvenkatasamy.dimension.datetime.service.impl;
 
+import com.github.rajkumarvenkatasamy.dimension.datetime.config.ApplicationConfiguration;
 import com.github.rajkumarvenkatasamy.dimension.datetime.model.DimDate;
 import com.github.rajkumarvenkatasamy.dimension.datetime.repository.DateDimensionRepository;
 import com.github.rajkumarvenkatasamy.dimension.datetime.service.DateDimensionService;
@@ -7,7 +8,6 @@ import com.github.rajkumarvenkatasamy.fiscalcalendar.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,29 +27,26 @@ import static java.time.temporal.ChronoUnit.*;
 public class DateDimensionServiceImpl implements DateDimensionService {
     private static final Logger LOGGER = LogManager.getLogger(DateDimensionServiceImpl.class);
 
-    @Value("${start.date}")
     private String inputStartDate;
-
-    @Value("${end.date}")
     private String inputEndDate;
-
-    @Value("${start.day.of.week}")
     private DayOfWeek startDayOfWeek;
-
-    @Value("${weekday.starts.on}")
     private DayOfWeek weekdayStartsOn;
-
-    @Value("${weekend.starts.on}")
     private DayOfWeek weekendStartsOn;
-
-    @Value("${date.skey.starting.value}")
-    private String dateKeyStartingValue;
-
-    @Value("${fiscal.calendar.start.month}")
+    private int dateKeyStartingValue;
     private Month fiscalCalendarStartMonth;
 
     @Autowired
     DateDimensionRepository dateDimensionRepository;
+
+    DateDimensionServiceImpl(ApplicationConfiguration applicationConfiguration){
+        inputStartDate = applicationConfiguration.getInputStartDate();
+        inputEndDate = applicationConfiguration.getInputEndDate();
+        startDayOfWeek = applicationConfiguration.getStartDayOfWeek();
+        weekdayStartsOn = applicationConfiguration.getWeekdayStartsOn();
+        weekendStartsOn = applicationConfiguration.getWeekendStartsOn();
+        dateKeyStartingValue = applicationConfiguration.getDateKeyStartingValue();
+        fiscalCalendarStartMonth = applicationConfiguration.getFiscalCalendarStartMonth();
+    }
 
     @Override
     @Transactional
@@ -70,7 +67,7 @@ public class DateDimensionServiceImpl implements DateDimensionService {
         LocalDate epochDate = LocalDate.ofEpochDay(0);
 
         DayOfWeek dayOfWeek;
-        int dateKey = Integer.parseInt(dateKeyStartingValue);
+        int dateKey = dateKeyStartingValue;
         int diffBetweenWeekStartDayAndToday;
         int halfYearNumber;
         String firstDateOfMonth, firstDateOfTrailing3rdMonth, firstDateOfLastMonth, firstDateOfLast3rdMonth,
@@ -94,7 +91,8 @@ public class DateDimensionServiceImpl implements DateDimensionService {
             dimDate.setDaySinceEpoch(dateInLoop.toEpochDay());
 
             dayOfWeek = dateInLoop.getDayOfWeek();
-            diffBetweenWeekStartDayAndToday = Math.abs(dayAndValue.get(startDayOfWeek) - dayAndValue.get(dayOfWeek));
+            diffBetweenWeekStartDayAndToday = Math.abs(dayAndValue.get(
+                    startDayOfWeek) - dayAndValue.get(dayOfWeek));
             weekStartDate = dateInLoop.minusDays(diffBetweenWeekStartDayAndToday);
             dimDate.setWeekStartDate(weekStartDate);
 
@@ -247,4 +245,17 @@ public class DateDimensionServiceImpl implements DateDimensionService {
         return dayOfWeekInMonth;
     }
 
+    @Override
+    public String toString() {
+        return "DateDimensionServiceImpl{" +
+                "inputStartDate='" + inputStartDate + '\'' +
+                ", inputEndDate='" + inputEndDate + '\'' +
+                ", startDayOfWeek=" + startDayOfWeek +
+                ", weekdayStartsOn=" + weekdayStartsOn +
+                ", weekendStartsOn=" + weekendStartsOn +
+                ", dateKeyStartingValue='" + dateKeyStartingValue + '\'' +
+                ", fiscalCalendarStartMonth=" + fiscalCalendarStartMonth +
+                ", dateDimensionRepository=" + dateDimensionRepository +
+                '}';
+    }
 }
