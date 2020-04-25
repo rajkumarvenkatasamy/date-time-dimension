@@ -1,11 +1,3 @@
-#ToDo
-
-- How to avoid test class modifications when a new application.property token is introduced
-- Test Classes
-- Unit Testing
-- Integration Testing
-- Testing in H2 and mysql
-
 # Getting Started
 
 ### About - Date Time Dimension Application
@@ -103,7 +95,7 @@ Just configure the jdbc driver properties and you are good to go
 ###Execution Options
 
 - As a first step, configure the application.properties with your desired values
-- For better performance, deploy the jar in the database server and execute it
+- For best performance, deploy the jar in the database server and execute it
 - For the ease of usage, this application gets initialized and populates the Date and Time dimension table on executing 
 the the Spring boot jar
 
