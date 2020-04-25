@@ -1,13 +1,12 @@
 # Getting Started
 
-### About - Date Time Dimension Package
+### About - Date Time Dimension Application
 
 For any Data Warehouse or Business Intelligence application, one needs to build or have a Date / Time dimension to allow 
 the users to analyse their facts based on one or many attributes of a Date or Time period. 
-I have developed this package as part of building Date and Time dimension for Business Intelligence application. 
-I have made it available in GitHub public repository so my fellow professionals who are in need of such conformed 
-dimension could make use of this library and gets started immediately. 
 
+This is a **Spring Boot Application** and I have developed this as part of building conformed dimensions in another 
+Business Intelligence application. 
 
 ### Pre-requisite
 
@@ -63,134 +62,63 @@ Some project requires Time dimension to be at `Seconds` precision whereas for so
 time.dimension.precision=minute
 ```
 
+###Database Configuration
 
+By default, the application.properties have the config done to use H2 Database. On executing the 
+application jar using the command provided in the section `Exection Options`, the data will get 
+populated in `DIM_DATE` and `DIM_TIME` tables.
 
-If you want to deal with the attributes related to Fiscal calendar such as: 
+You could access the H2 Database console in your browser using the url given below
 
-- Fiscal Day of Year
-- Fiscal Month of Year
-- Fiscal Week of Year
-- Fiscal Quarter of year
-- Fiscal Half of Year
-- Fiscal Year
+```http request
+<Replace IP and Port address as per your setup>
 
-then you could make use of this simple library.
-
-
-### Usage
-
-Since the starting month of a Fiscal calendar can vary based on the choice of the Entity, this library expects the Fiscal Month as one of the inputs.
-
-This package has different classes 
-
-* FiscalCalendar
-* FiscalDate
-* FiscalWeek
-* FiscalMonth
-* FiscalQuarter
-* FiscalHalfYear
-* FiscalYear
-
-based on the level of the time period which needs to be dealt with. 
-
-**For instance:** Given the starting month of Fiscal Calendar as April and you wanted to know the Fiscal day of year for the given date "2020-07-04", you can use *"FiscalDate"* class by intantiating it and call the method *"getFiscalDayOfYear"*
-
----
-*Java code snippet*
-```Java
-FiscalDate fiscalDate = new FiscalDate();
-fiscalDate.getFiscalDayOfYear(Month.APRIL, LocalDate.of(2020,7,4));
+http://localhost:8080/h2-console/
 ```
----
 
-Other methods in FiscalDate class are
+For convenience, I have packaged the application jar with the following Database drivers
 
-- getFirstFiscalDate(java.time.Month startMonthOfFiscalCalendar, java.time.LocalDate inputDate)  
-- getLastFiscalDate(java.time.Month startMonthOfFiscalCalendar, java.time.LocalDate inputDate)  
-- getFirstFiscalDateInCurrentCalendarYear(java.time.Month startMonthOfFiscalCalendar) 
+- H2 
+- Postgres 
+- MySQL
+- Microsoft SQL Server
+- Oracle
+- DB2
 
-Similarly to get the Fiscal Month of year for a given date, use the *"FiscalMonth"* class and its method *"getFiscalMonthOfYear"*
+Just configure the jdbc driver properties and you are good to go
 
----
-*Java code snippet*
-```Java
-FiscalMonth fiscalMonth = new FiscalMonth();
-fiscalMonth.getFiscalMonthOfYear(Month.JULY, LocalDate.of(2020,7,4));
-```
----
+###Download
+* You could use the jar - datetime-dimension-<version>.jar - available as part of this repository in
+`build/libs`
+* You could use the application.properties in `config` directory as a reference config file  
 
-If you want to get all the attributes of Fiscal Calendar library, then use the 
-*"FiscalCalendar"* as shown below:
+###Execution Options
 
-*Java code snippet*
+- As a first step, configure the application.properties with your desired values
+- For the ease of usage, this application gets initialized and populates the Date and Time dimension table on executing 
+the the Spring boot jar
+
 ```java
-        FiscalCalendar fiscalCalendarBuilder = new FiscalCalendar.FiscalCalendarBuilder(
-                Month.APRIL, LocalDate.of(2020,7,4)).build();
+java -jar <application jar name> --spring.config.location="<JAR_LOCATION_DIRECTORY>\config\application.properties"
+``` 
+- For some reason, if you want to truncate a table and repopulate the data again on a specific dimension table, you 
+could make use of the rest api as well without restarting the application 
 
-        fiscalCalendarBuilder.getFirstFiscalDate();
-        fiscalCalendarBuilder.getLastFiscalDate();
-        fiscalCalendarBuilder.getFiscalDayOfYear();
-        fiscalCalendarBuilder.getFiscalWeekOfYear();
-        fiscalCalendarBuilder.getFiscalMonthOfYear();
-        fiscalCalendarBuilder.getLastFiscalMonth();
-        fiscalCalendarBuilder.getFiscalQuarterOfYear();
-        fiscalCalendarBuilder.getFiscalHalfOfYear();
-        fiscalCalendarBuilder.getFiscalYear();  
+```java
+POST Requests
+Change the IP and Port details as per your setup
+
+http://localhost:8080/date
+http://localhost:8080/time
 ```
 
-To understand the various methods and data type of the parameters in this library, you might need to clone the repository in your machine to view the *JavaDoc/index.html* file in browser. 
-
-### Integration
-
-**Maven Central Repository :**
-
-https://mvnrepository.com/artifact/com.github.rajkumarvenkatasamy/fiscal-calendar/
-
-pom.xml
-
-```xml
-<!-- https://mvnrepository.com/artifact/com.github.rajkumarvenkatasamy/fiscal-calendar -->
-<dependency>
-    <groupId>com.github.rajkumarvenkatasamy</groupId>
-    <artifactId>fiscal-calendar</artifactId>
-    <version>1.0.1</version>
-</dependency>
-```
-For Documentation Integration
-
-```xml
-<dependency>
-  <groupId>com.github.rajkumarvenkatasamy</groupId>
-  <artifactId>fiscal-calendar</artifactId>
-  <version>1.0.1</version>
-  <classifier>javadoc</classifier>
-</dependency>
-```
-
-For Source code integration
-
-```xml
-<dependency>
-  <groupId>com.github.rajkumarvenkatasamy</groupId>
-  <artifactId>fiscal-calendar</artifactId>
-  <version>1.0.1</version>
-  <classifier>sources</classifier>
-</dependency>
-```
-
-**Gradle Integration :** build.gradle
-
-```groovy
-// https://mvnrepository.com/artifact/com.github.rajkumarvenkatasamy/fiscal-calendar
-compile group: 'com.github.rajkumarvenkatasamy', name: 'fiscal-calendar', version: '1.0.1'
-```
-
-You could also use the jar available in **"build/libs"** directory as dependency in your project  
+### 
+  
 
 ### Builds
-You can clone the repository and build the jar from source code using gradle
+You can clone the github repository and build the jar from source code using gradle
 
 ```shell script
 cd <Project Directory>
-gradlew build
+gradlew bootJar
 ```

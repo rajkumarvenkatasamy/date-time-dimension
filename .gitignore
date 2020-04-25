@@ -1,6 +1,10 @@
 HELP.md
 .gradle
-build/
+!/build/libs/datetime-dimension-1.0.0.jar
+build/classes
+build/generated
+build/resources
+build/tmp
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**
 !**/src/test/**

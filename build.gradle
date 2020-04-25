@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.github.rajkumarvenkatasamy'
 archivesBaseName = "datetime-dimension"
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0'
 sourceCompatibility = '1.8'
 
 configurations {
@@ -43,7 +43,7 @@ dependencies {
 }
 
 bootJar {
-    mainClassName = 'com.datetime.dimensions.DimensionsApplication'
+    mainClassName = 'com.github.rajkumarvenkatasamy.dimension.datetime.DimensionsApplication'
 }
 
 test {
