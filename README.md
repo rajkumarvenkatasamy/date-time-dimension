@@ -65,7 +65,7 @@ time.dimension.precision=minute
 ###Database Configuration
 
 By default, the application.properties have the config done to use H2 Database. On executing the 
-application jar using the command provided in the section `Exection Options`, the data will get 
+application jar using the command provided in the section [Execution Options](#execution-options), the data will get 
 populated in `DIM_DATE` and `DIM_TIME` tables.
 
 You could access the H2 Database console in your browser using the url given below
@@ -122,3 +122,6 @@ You can clone the github repository and build the jar from source code using gra
 cd <Project Directory>
 gradlew bootJar
 ```
+
+### Contribution
+You can contribute to this Repository in any form. Please contact me for approval. 
