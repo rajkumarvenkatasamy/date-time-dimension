@@ -10,7 +10,40 @@ Business Intelligence application.
 
 ### Pre-requisite
 
-* Java 8
+* Download and Install : Java 8
+
+### QuickStart Guide
+
+My goal is to make a non java person also to use this application and get the data required for Date and Time 
+dimension tables.  
+
+1. Download the jar - datetime-dimension-<version>.jar - available as part of this repository in
+  `build/libs` in your machine
+2. For the ease of usage, this application gets initialized and populates the Date and Time dimension tables on executing 
+the the Spring boot jar
+
+    ```java
+    java -jar <application jar name> --spring.config.location="<JAR_LOCATION_DIRECTORY>\config\application.properties"
+    ``` 
+3. Open the below url in browser to access the default in-built h2 database
+    ```http request
+    <Replace IP and Port address as per your setup>
+    
+    http://localhost:8080/h2-console/
+    ```
+4. Login as user "sa" and password as "password"
+5. Execute the sql commands 
+    ```sql
+    select * from dim_date;
+    select * from dim_time;
+    ```
+6. To export the data as CSV file, execute the below command in the same sql command windows
+
+```sql
+call CSVWRITE ( '<Directory path>/dim_date.csv', 'SELECT * FROM dim_date' );
+call CSVWRITE ( '<Directory path>/dim_time.csv', 'SELECT * FROM dim_time' ); 
+```
+That's it, you have date and time dimension data in both Table and CSV format
 
 ### Configuration Options
 
@@ -96,7 +129,7 @@ Just configure the jdbc driver properties and you are good to go
 
 - As a first step, configure the application.properties with your desired values
 - For best performance, deploy the jar in the database server and execute it
-- For the ease of usage, this application gets initialized and populates the Date and Time dimension table on executing 
+- For the ease of usage, this application gets initialized and populates the Date and Time dimension tables on executing 
 the the Spring boot jar
 
 ```java
@@ -113,8 +146,25 @@ http://localhost:8080/date
 http://localhost:8080/time
 ```
 
-### 
-  
+### Key Data Points
+
+This is an optional section for reading. You skip it at your will.
+
+- All key fields (Except : Quarter Key and Half Year Key) points to the corresponding period since epoch 
+(1970-01-01 : YYYY-MM-DD format).
+<br>
+`For Instance:` 
+If the input start date is 1970-01-01, then the date key is 0 and gets incremented or decremented by one from that date. 
+So negative values are possible in key fields based on the date which gets processed. This is ok and expected behavior.
+
+- The purpose of key field is to use in aggregate tables based on the grain level of the aggregates.
+<br>
+`For Instance:`
+<br>
+If the aggregate grain level is week, then use week_key in aggregate 
+<br>
+If the aggregate grain level is quarter, then use quarter_key in aggregate
+
 
 ### Builds
 You can clone the github repository and build the jar from source code using gradle

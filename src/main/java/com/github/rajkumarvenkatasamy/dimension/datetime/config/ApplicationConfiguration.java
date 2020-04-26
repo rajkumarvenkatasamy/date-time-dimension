@@ -15,7 +15,6 @@ public class ApplicationConfiguration {
     private DayOfWeek startDayOfWeek;
     private DayOfWeek weekdayStartsOn;
     private DayOfWeek weekendStartsOn;
-    private int dateKeyStartingValue;
     private Month fiscalCalendarStartMonth;
 
     @Autowired
@@ -25,7 +24,6 @@ public class ApplicationConfiguration {
                                     @Value("${start.day.of.week}")  DayOfWeek startDayOfWeek,
                                     @Value("${weekday.starts.on}")  DayOfWeek weekdayStartsOn,
                                     @Value("${weekend.starts.on}")  DayOfWeek weekendStartsOn,
-                                    @Value("${date.skey.starting.value}")  int dateKeyStartingValue,
                                     @Value("${fiscal.calendar.start.month}")  Month fiscalCalendarStartMonth){
         this.timeDimensionPrecision = timeDimensionPrecision;
         this.inputStartDate = inputStartDate;
@@ -33,7 +31,6 @@ public class ApplicationConfiguration {
         this.startDayOfWeek = startDayOfWeek;
         this.weekdayStartsOn = weekdayStartsOn;
         this.weekendStartsOn = weekendStartsOn;
-        this.dateKeyStartingValue = dateKeyStartingValue;
         this.fiscalCalendarStartMonth = fiscalCalendarStartMonth;
     }
 
@@ -59,10 +56,6 @@ public class ApplicationConfiguration {
 
     public DayOfWeek getWeekendStartsOn() {
         return weekendStartsOn;
-    }
-
-    public int getDateKeyStartingValue() {
-        return dateKeyStartingValue;
     }
 
     public Month getFiscalCalendarStartMonth() {

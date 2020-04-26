@@ -13,13 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.time.temporal.IsoFields;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.WeekFields;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.time.temporal.ChronoUnit.*;
 
@@ -32,7 +30,6 @@ public class DateDimensionServiceImpl implements DateDimensionService {
     private DayOfWeek startDayOfWeek;
     private DayOfWeek weekdayStartsOn;
     private DayOfWeek weekendStartsOn;
-    private int dateKeyStartingValue;
     private Month fiscalCalendarStartMonth;
 
     @Autowired
@@ -44,7 +41,6 @@ public class DateDimensionServiceImpl implements DateDimensionService {
         startDayOfWeek = applicationConfiguration.getStartDayOfWeek();
         weekdayStartsOn = applicationConfiguration.getWeekdayStartsOn();
         weekendStartsOn = applicationConfiguration.getWeekendStartsOn();
-        dateKeyStartingValue = applicationConfiguration.getDateKeyStartingValue();
         fiscalCalendarStartMonth = applicationConfiguration.getFiscalCalendarStartMonth();
     }
 
@@ -84,7 +80,6 @@ public class DateDimensionServiceImpl implements DateDimensionService {
         LocalDate epochDate = LocalDate.ofEpochDay(0);
 
         DayOfWeek dayOfWeek;
-        int dateKey = dateKeyStartingValue;
         int diffBetweenWeekStartDayAndToday;
         int halfYearNumber;
         String firstDateOfMonth, firstDateOfTrailing3rdMonth, firstDateOfLastMonth, firstDateOfLast3rdMonth,
@@ -102,10 +97,9 @@ public class DateDimensionServiceImpl implements DateDimensionService {
             DimDate dimDate = new DimDate();
             yearString = dateInLoop.toString().substring(0, 4);
 
-            dimDate.setDateKey(dateKey);
+            dimDate.setDateKey(dateInLoop.toEpochDay());
             dimDate.setDate(dateInLoop);
             dimDate.setDateInNumber(Integer.valueOf(dateInLoop.toString().replaceAll("-", "")));
-            dimDate.setDaySinceEpoch(dateInLoop.toEpochDay());
 
             dayOfWeek = dateInLoop.getDayOfWeek();
             diffBetweenWeekStartDayAndToday = Math.abs(dayAndValue.get(
@@ -116,8 +110,8 @@ public class DateDimensionServiceImpl implements DateDimensionService {
             weekEndDate = weekStartDate.plusDays(6);
             dimDate.setWeekEndDate(weekEndDate);
 
-            dimDate.setDayName(dayOfWeek);
-            dimDate.setShortDayName(dayOfWeek.toString().substring(0, 3));
+            dimDate.setDayName(dayOfWeek.getDisplayName(TextStyle.FULL, Locale.US));
+            dimDate.setShortDayName(dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.US));
             dimDate.setIsWeekday(dayOfWeek.equals(startDayOfWeek) || dayOfWeek.equals(startDayOfWeek.plus(1))
                     || dayOfWeek.equals(startDayOfWeek.plus(2)) || dayOfWeek.equals(startDayOfWeek.plus(3))
                     || dayOfWeek.equals(startDayOfWeek.plus(4))
@@ -132,12 +126,12 @@ public class DateDimensionServiceImpl implements DateDimensionService {
             dimDate.setNumWeeksInMonth(YearMonth.of(dateInLoop.getYear(), dateInLoop.getMonthValue()).atEndOfMonth()
                     .get(WeekFields.ISO.weekOfMonth()));
             dimDate.setWeekOfMonth(dateInLoop.get(WeekFields.ISO.weekOfMonth()));
-            dimDate.setWeeksSinceEpoch(WEEKS.between(epochDate, dateInLoop));
+            dimDate.setWeekKey(WEEKS.between(epochDate, dateInLoop));
             dimDate.setWeekOfYear(dateInLoop.get(WeekFields.ISO.weekOfYear()));
-            dimDate.setMonthName(dateInLoop.getMonth());
-            dimDate.setShortMonthName(dateInLoop.getMonth().toString().substring(0, 3));
+            dimDate.setMonthName(dateInLoop.getMonth().getDisplayName(TextStyle.FULL,Locale.US));
+            dimDate.setShortMonthName(dateInLoop.getMonth().getDisplayName(TextStyle.SHORT,Locale.US));
             dimDate.setMonthOfYear(dateInLoop.getMonthValue());
-            dimDate.setMonthsSinceEpoch(MONTHS.between(epochDate, dateInLoop));
+            dimDate.setMonthKey(MONTHS.between(epochDate, dateInLoop));
             dimDate.setYearMonth(String.valueOf(YearMonth.of(dateInLoop.getYear(), dateInLoop.getMonthValue())));
 
             firstDateOfMonth = dateInLoop.with(TemporalAdjusters.firstDayOfMonth()).format(yearMonth);
@@ -158,8 +152,8 @@ public class DateDimensionServiceImpl implements DateDimensionService {
             quarterName = "Q" +
                     dateInLoop.get(IsoFields.QUARTER_OF_YEAR);
             quarterString = String.valueOf(dateInLoop.get(IsoFields.QUARTER_OF_YEAR));
-            dimDate.setQuarterId(Integer.valueOf((yearString)
-                    .concat(quarterString)));
+            dimDate.setQuarterKey(Long.valueOf(((yearString)
+                    .concat(quarterString))));
             dimDate.setQuarterName(quarterName);
             dimDate.setYearQuarterName(yearString +
                     "-" +
@@ -171,9 +165,9 @@ public class DateDimensionServiceImpl implements DateDimensionService {
             dimDate.setYearHalfYearName(yearString +
                     "-" +
                     (halfYearNumber == 1 ? "H1" : "H2"));
-            dimDate.setHalfYearId(Integer.valueOf(yearString.concat(String.valueOf(halfYearNumber))));
+            dimDate.setHalfYearKey(Long.valueOf(yearString.concat(String.valueOf(halfYearNumber))));
             dimDate.setYear(dateInLoop.getYear());
-            dimDate.setYearsSinceEpoch(YEARS.between(epochDate, dateInLoop));
+            dimDate.setYearKey(YEARS.between(epochDate, dateInLoop));
 
             fiscalMonthOfYear = fiscalMonthObj.getFiscalMonthOfYear(fiscalCalendarStartMonth, dateInLoop);
             fiscalQuarterOfYear = fiscalQuarterObj.getFiscalQuarterOfYear(fiscalCalendarStartMonth, dateInLoop);
@@ -195,7 +189,6 @@ public class DateDimensionServiceImpl implements DateDimensionService {
             dimDate.setFiscalDayOfYear(fiscalDateObj.getFiscalDayOfYear(fiscalCalendarStartMonth, dateInLoop));
 
             dateInLoop = dateInLoop.plusDays(1);
-            dateKey = dateKey + 1;
             LOGGER.debug("dimDate object values : " + dimDate.toString());
             dimDateList.add(dimDate);
         }
@@ -266,7 +259,6 @@ public class DateDimensionServiceImpl implements DateDimensionService {
                 ", startDayOfWeek=" + startDayOfWeek +
                 ", weekdayStartsOn=" + weekdayStartsOn +
                 ", weekendStartsOn=" + weekendStartsOn +
-                ", dateKeyStartingValue='" + dateKeyStartingValue + '\'' +
                 ", fiscalCalendarStartMonth=" + fiscalCalendarStartMonth +
                 ", dateDimensionRepository=" + dateDimensionRepository +
                 '}';

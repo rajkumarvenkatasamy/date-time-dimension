@@ -6,9 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.Month;
 
 @Entity
 @Data
@@ -17,19 +15,16 @@ public class DimDate {
 
     @Id
     @Column(name = "date_key")
-    private Integer dateKey;
+    private Long dateKey;
 
-    @Column(name = "date$")
+    @Column(name = "date_value")
     private LocalDate date;
 
     @Column(name = "date_in_number")
     private Integer dateInNumber;
 
-    @Column(name = "days_since_epoch")
-    private Long daySinceEpoch;
-
     @Column(name = "day_name")
-    private DayOfWeek dayName;
+    private String dayName;
 
     @Column(name = "short_day_name")
     private String shortDayName;
@@ -52,12 +47,6 @@ public class DimDate {
     @Column(name = "day_of_year")
     private Integer dayOfYear;
 
-//    @Column(name = "week_number")
-//    private Integer weekNumber ;
-
-//    @Column(name = "week_seq_number")
-//    private Integer weekSequenceNumber;
-
     @Column(name = "week_of_month")
     private Integer weekOfMonth;
 
@@ -70,17 +59,11 @@ public class DimDate {
     @Column(name = "week_end_date")
     private LocalDate weekEndDate;
 
-    @Column(name = "weeks_since_epoch")
-    private Long weeksSinceEpoch;
-
-//    @Column(name = "month_number")
-//    private Integer monthNumber;
-
-//    @Column(name = "month_seq_number")
-//   private Integer monthSequenceNumber;
+    @Column(name = "week_key")
+    private Long weekKey;
 
     @Column(name = "month_name")
-    private Month monthName;
+    private String monthName;
 
     @Column(name = "short_month_name")
     private String shortMonthName;
@@ -103,8 +86,8 @@ public class DimDate {
     @Column(name = "num_weeks_in_month")
     private Integer numWeeksInMonth;
 
-    @Column(name = "months_since_epoch")
-    private Long monthsSinceEpoch;
+    @Column(name = "month_key")
+    private Long monthKey;
 
     @Column(name = "quarter")
     private String quarter;
@@ -115,8 +98,8 @@ public class DimDate {
     @Column(name = "year_quarter_name")
     private String yearQuarterName;
 
-    @Column(name = "quarter_id")
-    private Integer quarterId;
+    @Column(name = "quarter_key")
+    private Long quarterKey;
 
     @Column(name = "half_year_number")
     private Integer halfYearNumber;
@@ -124,8 +107,8 @@ public class DimDate {
     @Column(name = "half_year_name")
     private String halfYearName;
 
-    @Column(name = "half_year_id")
-    private Integer halfYearId;
+    @Column(name = "half_year_key")
+    private Long halfYearKey;
 
     @Column(name = "year_half_year_name")
     private String yearHalfYearName;
@@ -133,8 +116,8 @@ public class DimDate {
     @Column(name = "year")
     private Integer year;
 
-    @Column(name = "years_since_epoch")
-    private Long yearsSinceEpoch;
+    @Column(name = "year_key")
+    private Long yearKey;
 
     @Column(name = "fiscal_week_of_year")
     private Integer fiscalWeekOfYear;
