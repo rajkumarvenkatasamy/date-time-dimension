@@ -1,5 +1,19 @@
-# Getting Started
+Table of contents
+=================
 
+<!--ts-->
+   * [About - Date Time Dimension Application](#about---date-time-dimension-application)
+   * [Pre-requisites](#pre-requisite)
+   * [QuickStart Guide](#quickstart-guide)
+   * [Configuration Options](#configuration-options)
+   * [Database Configuration](#database-configuration)
+   * [Download](#download)
+   * [Execution Options](#execution-options)
+   * [Key Data Points](#key-data-points)
+   * [Build](#build)
+   * [Contribution](#contribution)
+<!--te-->
+   
 ### About - Date Time Dimension Application
 
 For any Data Warehouse or Business Intelligence application, one needs to build or have a Date / Time dimension to allow 
@@ -95,7 +109,7 @@ Some project requires Time dimension to be at `Seconds` precision whereas for so
 time.dimension.precision=minute
 ```
 
-###Database Configuration
+### Database Configuration
 
 By default, the application.properties have the config done to use H2 Database. On executing the 
 application jar using the command provided in the section [Execution Options](#execution-options), the data will get 
@@ -120,12 +134,12 @@ For convenience, I have packaged the application jar with the following Database
 
 Just configure the jdbc driver properties and you are good to go
 
-###Download
+### Download
 * You could use the jar - datetime-dimension-<version>.jar - available as part of this repository in
 `build/libs`
 * You could use the application.properties in `config` directory as a reference config file  
 
-###Execution Options
+### Execution Options
 
 - As a first step, configure the application.properties with your desired values
 - For best performance, deploy the jar in the database server and execute it
@@ -152,22 +166,19 @@ This is an optional section for reading. You skip it at your will.
 
 - All key fields (Except : Quarter Key and Half Year Key) points to the corresponding period since epoch 
 (1970-01-01 : YYYY-MM-DD format).
-<br>
-`For Instance:` 
-If the input start date is 1970-01-01, then the date key is 0 and gets incremented or decremented by one from that date. 
-So negative values are possible in key fields based on the date which gets processed. This is ok and expected behavior.
 
+**For Instance:**
+    - If the input start date is 1970-01-01, then the date key is 0 and gets incremented or decremented by one from that date. 
+    - Negative values are possible in key fields based on the date which gets processed. This is ok and expected behavior.
 - The purpose of key field is to use in aggregate tables based on the grain level of the aggregates.
-<br>
-`For Instance:`
-<br>
-If the aggregate grain level is week, then use week_key in aggregate 
-<br>
-If the aggregate grain level is quarter, then use quarter_key in aggregate
+
+**For Instance:**
+    - If the aggregate grain level is week, then use week_key in aggregate 
+    - If the aggregate grain level is quarter, then use quarter_key in aggregate
 
 - `Day_Of_Week` field value is based on `start.day.of.week` token in application.properties
 
-### Builds
+### Build
 You can clone the github repository and build the jar from source code using gradle
 
 ```shell script
