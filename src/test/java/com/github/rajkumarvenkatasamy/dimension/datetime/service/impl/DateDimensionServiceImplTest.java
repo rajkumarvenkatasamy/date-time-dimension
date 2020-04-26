@@ -6,11 +6,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 class DateDimensionServiceImplTest {
@@ -31,33 +32,33 @@ class DateDimensionServiceImplTest {
         // Setup
 
         // Run the test
-        //final boolean result = dateDimensionServiceImplUnderTest.populateDateDimension();
+        final boolean result = dateDimensionServiceImplUnderTest.populateDateDimension();
 
         // Verify the results
-        //assertTrue(result);
+        assertTrue(result);
     }
 
     @Test
     void testProcessDateDimension() {
         // Setup
         final DimDate dimDate = new DimDate();
-        dimDate.setDateKey(0);
+        dimDate.setDateKey(0L);
         dimDate.setDate(LocalDate.of(2017, 1, 1));
         dimDate.setDateInNumber(0);
-        dimDate.setDaySinceEpoch(0L);
-        dimDate.setDayName(DayOfWeek.FRIDAY);
+        dimDate.setDayName("dayName");
         dimDate.setShortDayName("shortDayName");
         dimDate.setIsWeekday('a');
         dimDate.setIsWeekend('a');
         dimDate.setDayOfWeek(0);
         dimDate.setDayOfWeekInMonth(0);
+        dimDate.setDayOfMonth(0);
         final List<DimDate> expectedResult = Arrays.asList(dimDate);
 
         // Run the test
-        // final List<DimDate> result = dateDimensionServiceImplUnderTest.processDateDimension();
+        final List<DimDate> result = dateDimensionServiceImplUnderTest.processDateDimension();
 
         // Verify the results
-        // assertEquals(expectedResult, result);
+        assertEquals(expectedResult, result);
     }
 
     @Test
@@ -68,6 +69,6 @@ class DateDimensionServiceImplTest {
         final String result = dateDimensionServiceImplUnderTest.toString();
 
         // Verify the results
-        //assertEquals("result", result);
+        assertEquals("result", result);
     }
 }

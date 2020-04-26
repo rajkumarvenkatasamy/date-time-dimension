@@ -165,6 +165,7 @@ If the aggregate grain level is week, then use week_key in aggregate
 <br>
 If the aggregate grain level is quarter, then use quarter_key in aggregate
 
+- `Day_Of_Week` field value is based on `start.day.of.week` token in application.properties
 
 ### Builds
 You can clone the github repository and build the jar from source code using gradle
