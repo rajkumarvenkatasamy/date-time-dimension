@@ -28,10 +28,10 @@ Business Intelligence application.
 
 ### QuickStart Guide
 
-My goal is to make a non java person also to use this application and get the data required for Date and Time 
-dimension tables.  
+My goal is to make a non java person also to find it easy to use this application and get the data required for 
+Date and Time dimension tables.  
 
-1. Download the jar - datetime-dimension-<version>.jar - available as part of this repository in
+1. Download the jar : `datetime-dimension-<version>.jar` - available as part of this repository in
   `build/libs` in your machine
 2. For the ease of usage, this application gets initialized and populates the Date and Time dimension tables on executing 
 the the Spring boot jar
@@ -45,13 +45,13 @@ the the Spring boot jar
     
     http://localhost:8080/h2-console/
     ```
-4. Login as user "sa" and password as "password"
+4. Login as user `sa` and password as `password`
 5. Execute the sql commands 
     ```sql
     select * from dim_date;
     select * from dim_time;
     ```
-6. To export the data as CSV file, execute the below command in the same sql command windows
+6. To export the data as `CSV file`, execute the below commands in the same sql command window
 
 ```sql
 call CSVWRITE ( '<Directory path>/dim_date.csv', 'SELECT * FROM dim_date' );
