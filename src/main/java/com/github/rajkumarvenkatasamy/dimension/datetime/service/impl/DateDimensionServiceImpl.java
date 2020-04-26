@@ -148,7 +148,7 @@ public class DateDimensionServiceImpl implements DateDimensionService {
             dimDate.setLast3Months(firstDateOfLast3rdMonth.concat(" : ").concat(firstDateOfLastMonth));
             dimDate.setLast6Months(firstDateOfLast6thMonth.concat(" : ").concat(firstDateOfLastMonth));
 
-            dimDate.setQuarter(String.valueOf(dateInLoop.get(IsoFields.QUARTER_OF_YEAR)));
+            dimDate.setQuarter(dateInLoop.get(IsoFields.QUARTER_OF_YEAR));
             quarterName = "Q" +
                     dateInLoop.get(IsoFields.QUARTER_OF_YEAR);
             quarterString = String.valueOf(dateInLoop.get(IsoFields.QUARTER_OF_YEAR));
@@ -251,16 +251,4 @@ public class DateDimensionServiceImpl implements DateDimensionService {
         return dayOfWeekInMonth;
     }
 
-    @Override
-    public String toString() {
-        return "DateDimensionServiceImpl{" +
-                "inputStartDate='" + inputStartDate + '\'' +
-                ", inputEndDate='" + inputEndDate + '\'' +
-                ", startDayOfWeek=" + startDayOfWeek +
-                ", weekdayStartsOn=" + weekdayStartsOn +
-                ", weekendStartsOn=" + weekendStartsOn +
-                ", fiscalCalendarStartMonth=" + fiscalCalendarStartMonth +
-                ", dateDimensionRepository=" + dateDimensionRepository +
-                '}';
-    }
 }

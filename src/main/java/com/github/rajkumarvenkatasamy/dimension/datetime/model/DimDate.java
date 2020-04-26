@@ -90,7 +90,7 @@ public class DimDate {
     private Long monthKey;
 
     @Column(name = "quarter")
-    private String quarter;
+    private int quarter;
 
     @Column(name = "quarter_name")
     private String quarterName;
@@ -142,4 +142,5 @@ public class DimDate {
 
     @Column(name = "fiscal_day_of_year")
     private Integer fiscalDayOfYear;
-}
+
+ }
