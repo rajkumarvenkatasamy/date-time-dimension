@@ -185,4 +185,4 @@ gradlew bootJar
 ```
 
 ### Contribution
-You can contribute to this Repository in any form. Please contact me for approval. 
+You can contribute to this Repository in any form.  
