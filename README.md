@@ -64,8 +64,6 @@ That's it, you have date and time dimension data in both Table and CSV format
 This package provides configuration options to customize the way in which data gets generated for Date and 
 Time dimension. See the application.properties file to understand the various config tokens available. 
 
-`Date Dimension Configuration options`
-
 In case of Date dimension you could provide a start date and end date, so that the package would populate the data for 
 that given period
 
@@ -167,12 +165,12 @@ This is an optional section for reading. You skip it at your will.
 - All key fields (Except : Quarter Key and Half Year Key) points to the corresponding period since epoch 
 (1970-01-01 : YYYY-MM-DD format).
 
-**For Instance:**
+    **For Instance:**
     - If the input start date is 1970-01-01, then the date key is 0 and gets incremented or decremented by one from that date. 
     - Negative values are possible in key fields based on the date which gets processed. This is ok and expected behavior.
 - The purpose of key field is to use in aggregate tables based on the grain level of the aggregates.
 
-**For Instance:**
+    **For Instance:**
     - If the aggregate grain level is week, then use week_key in aggregate 
     - If the aggregate grain level is quarter, then use quarter_key in aggregate
 
