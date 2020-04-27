@@ -47,7 +47,10 @@ the the Spring boot jar
     ``` 
 That's it. The data is available in `dim_date` and `dim_time` tables for you to consume.
 
-![Date Dimension Table](/src/main/resources/static/images/dim_date.png)  ![Time Dimension Table](/src/main/resources/static/images/dim_time.png)
+Date Dimension                                                          | Time Dimension 
+----------------------------------------------------------------------- | -----------------------------------------------------------------------
+![Date Dimension Table](/src/main/resources/static/images/dim_date.png) | ![Time Dimension Table](/src/main/resources/static/images/dim_time.png)
+ 
 
 #### To view and export the data in default H2 Database:
 
