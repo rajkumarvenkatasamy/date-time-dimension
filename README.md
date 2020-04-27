@@ -17,7 +17,7 @@ Table of contents
 ### About - Date Time Dimension Application
 
 For any Data Warehouse or Business Intelligence application, one needs to build or have a Date / Time dimension to allow 
-the users to analyse their facts based on one or many attributes of a Date or Time period. 
+the users to analyse their facts based on one or many attributes of a Date or Time dimension. 
 
 This is a **Spring Boot Application** and I have developed this as part of building conformed dimensions in another 
 Business Intelligence application. 
