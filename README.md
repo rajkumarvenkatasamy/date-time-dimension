@@ -45,25 +45,28 @@ the the Spring boot jar
     ```java
     java -jar <application jar name> --spring.config.location="<JAR_LOCATION_DIRECTORY>\config\application.properties"
     ``` 
-4. Open the below url in browser to access the default in-built h2 database
+That's it. The data is available in `dim_date` and `dim_time` tables for you to consume.
+
+    **To view the data in default H2 Database:**
+
+1. Open the below url in browser to access the default in-built h2 database
     ```http request
     <Replace IP and Port address as per your setup>
     
     http://localhost:8080/h2-console/
     ```
-5. Login as user `sa` and password as `password`
-6. Execute the sql commands 
+2. Login as user `sa` and password as `password`
+3. Execute the sql commands 
     ```sql
     select * from dim_date;
     select * from dim_time;
     ```
-7. To export the data as `CSV file`, execute the below commands in the same sql command window
+4. To export the data as `CSV file`, execute the below commands in the same sql command window
 
 ```sql
 call CSVWRITE ( '<Directory path>/dim_date.csv', 'SELECT * FROM dim_date' );
 call CSVWRITE ( '<Directory path>/dim_time.csv', 'SELECT * FROM dim_time' ); 
 ```
-That's it, you have date and time dimension data in both Table and CSV format
 
 ### Configuration Options
 
@@ -136,7 +139,12 @@ For convenience, I have packaged the application jar with the following Database
 - Oracle
 - DB2
 
-Just configure the jdbc driver properties and you are good to go
+Just configure the jdbc driver properties and you are good to go. 
+
+`Note:` 
+
+Except for H2 DB, if you are using any other relational database, just ensure that the Database 
+already exists. The application will auto create `dim_date` and `dim_time` tables. 
 
 ### Download
 * You could use the jar - datetime-dimension-<version>.jar - available as part of this repository in
@@ -145,25 +153,25 @@ Just configure the jdbc driver properties and you are good to go
 
 ### Execution Options
 
-   - As a first step, configure the application.properties with your desired values
-   - For best performance, deploy the jar in the database server and execute it
-   - For the ease of usage, this application gets initialized and populates the Date and Time dimension tables on executing 
-     the the Spring boot jar
+- As a first step, configure the application.properties with your desired values
+- For best performance, deploy the jar in the database server and execute it
+- For the ease of usage, this application gets initialized and populates the Date and Time dimension tables on executing 
+  the the Spring boot jar
 
-     ```java
-     java -jar <application jar name> --spring.config.location="<JAR_LOCATION_DIRECTORY>\config\application.properties"
-     ``` 
-   - For some reason, if you want to truncate a table and repopulate the data again on a specific dimension table, you 
-     could make use of the rest api as well without restarting the application 
+  ```java
+  java -jar <application jar name> --spring.config.location="<JAR_LOCATION_DIRECTORY>\config\application.properties"
+  ``` 
+- For some reason, if you want to truncate a table and repopulate the data again on a specific dimension table, you 
+  could make use of the rest api as well without restarting the application 
 
-     ```java
-     POST Requests using any REST Client tool such as POSTMAN, curl command etc 
-     
-     Change the IP and Port details as per your setup
-     
-     http://localhost:8080/date
-     http://localhost:8080/time
-     ```
+  ```java
+  POST Requests using any REST Client tool such as POSTMAN, curl command etc 
+ 
+  Change the IP and Port details as per your setup
+ 
+  http://localhost:8080/date
+  http://localhost:8080/time
+  ```
 
 ### Key Data Points
 
