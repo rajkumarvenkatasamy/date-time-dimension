@@ -145,24 +145,25 @@ Just configure the jdbc driver properties and you are good to go
 
 ### Execution Options
 
-- As a first step, configure the application.properties with your desired values
-- For best performance, deploy the jar in the database server and execute it
-- For the ease of usage, this application gets initialized and populates the Date and Time dimension tables on executing 
-the the Spring boot jar
+   - As a first step, configure the application.properties with your desired values
+   - For best performance, deploy the jar in the database server and execute it
+   - For the ease of usage, this application gets initialized and populates the Date and Time dimension tables on executing 
+     the the Spring boot jar
 
-```java
-java -jar <application jar name> --spring.config.location="<JAR_LOCATION_DIRECTORY>\config\application.properties"
-``` 
-- For some reason, if you want to truncate a table and repopulate the data again on a specific dimension table, you 
-could make use of the rest api as well without restarting the application 
+     ```java
+     java -jar <application jar name> --spring.config.location="<JAR_LOCATION_DIRECTORY>\config\application.properties"
+     ``` 
+   - For some reason, if you want to truncate a table and repopulate the data again on a specific dimension table, you 
+     could make use of the rest api as well without restarting the application 
 
-```java
-POST Requests
-Change the IP and Port details as per your setup
-
-http://localhost:8080/date
-http://localhost:8080/time
-```
+     ```java
+     POST Requests using any REST Client tool such as POSTMAN, curl command etc 
+     
+     Change the IP and Port details as per your setup
+     
+     http://localhost:8080/date
+     http://localhost:8080/time
+     ```
 
 ### Key Data Points
 
