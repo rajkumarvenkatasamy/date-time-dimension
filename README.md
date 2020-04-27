@@ -213,4 +213,6 @@ gradlew bootJar
 ```
 
 ### Contribution
-You can contribute to this Repository in any form.  
+Your contribution is welcome in any means on your own interest, whether that includes identifying issues, helping with
+documentation, or contributing code changes to fix bugs, add tests, or implement new features etc.
+  
