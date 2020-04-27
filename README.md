@@ -35,9 +35,9 @@ Date and Time dimension tables.
   `build/libs` in your machine
 
 2. Create a directory named `config` in the folder where you have copied the jar. Create a file 
-named `application.properties`. Copy and paste the contents in `application.properties` file 
+named `application.properties`. Copy and paste the contents of `application.properties` file 
 available in `config directory in github` repository. Modify the value of token 
-"spring.datasource.url" to reflect a path in your machine. 
+`spring.datasource.url` to reflect a path in your machine. 
 
 3. For the ease of usage, this application gets initialized and populates the Date and Time dimension tables on executing 
 the the Spring boot jar
