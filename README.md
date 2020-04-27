@@ -33,25 +33,31 @@ Date and Time dimension tables.
 
 1. Download the jar : `datetime-dimension-<version>.jar` - available as part of this repository in
   `build/libs` in your machine
-2. For the ease of usage, this application gets initialized and populates the Date and Time dimension tables on executing 
+
+2. Create a directory named `config` in the folder where you have copied the jar. Create a file 
+named `application.properties`. Copy and paste the contents in `application.properties` file 
+available in `config directory in github` repository. Modify the value of token 
+"spring.datasource.url" to reflect a path in your machine. 
+
+3. For the ease of usage, this application gets initialized and populates the Date and Time dimension tables on executing 
 the the Spring boot jar
 
     ```java
     java -jar <application jar name> --spring.config.location="<JAR_LOCATION_DIRECTORY>\config\application.properties"
     ``` 
-3. Open the below url in browser to access the default in-built h2 database
+4. Open the below url in browser to access the default in-built h2 database
     ```http request
     <Replace IP and Port address as per your setup>
     
     http://localhost:8080/h2-console/
     ```
-4. Login as user `sa` and password as `password`
-5. Execute the sql commands 
+5. Login as user `sa` and password as `password`
+6. Execute the sql commands 
     ```sql
     select * from dim_date;
     select * from dim_time;
     ```
-6. To export the data as `CSV file`, execute the below commands in the same sql command window
+7. To export the data as `CSV file`, execute the below commands in the same sql command window
 
 ```sql
 call CSVWRITE ( '<Directory path>/dim_date.csv', 'SELECT * FROM dim_date' );
