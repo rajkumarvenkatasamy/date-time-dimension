@@ -1,3 +1,9 @@
+[![License](http://img.shields.io/:license-apache%202.0-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
+
+**Open Source Project**
+
+Licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+
 Table of contents
 =================
 
@@ -135,7 +141,7 @@ You could access the H2 Database console in your browser using the url given bel
 http://localhost:8080/h2-console/
 ```
 
-For convenience, I have packaged the application jar with the following Database drivers
+For convenience, I have packaged the application jar with the following Database drivers as dependencies of the project
 
 - H2 
 - Postgres 
