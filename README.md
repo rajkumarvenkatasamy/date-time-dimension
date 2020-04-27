@@ -43,7 +43,9 @@ Date and Time dimension tables.
 2. Create a directory named `config` in the folder where you have copied the jar. Create a file 
 named `application.properties`. Copy and paste the contents of `application.properties` file 
 available in `config directory in github` repository. Modify the value of token 
-`spring.datasource.url` to reflect a path in your machine. 
+`spring.datasource.url` to reflect a path in your machine. In the sample config file, the given value is 
+`jdbc:h2:file:C:\\Users\\venkara\\testdb`, where `C:\\Users\\venkara\\` is the directory and `testdb` is the database 
+name. Just specify the name of the DB, there is no need to create any file with that name.
 
 3. For the ease of usage, this application gets initialized and populates the Date and Time dimension tables on executing 
 the the Spring boot jar
